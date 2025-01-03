@@ -1,0 +1,53 @@
+services:
+  samba:
+    image: dockurr/samba
+    container_name: ${STACK_NAME}-sambashare
+    network_mode: bridge
+    environment:
+      NAME: "${NETWORK_SHARE_NAME}"
+      USER: "${NETWORK_SHARE_USER}"
+      PASS: "${NETWORK_SHARE_PASS}"
+      TZ: America/Chicago
+    ports:
+      - 445:445
+    volumes:
+      - ${NETWORK_SHARE_FILE_PATH}:/storage
+    restart: unless-stopped
+    
+  dns:
+    image: lancachenet/lancache-dns:latest
+    container_name: ${STACK_NAME}-dns
+    environment:
+      TZ: America/Chicago
+      - USE_GENERIC_CACHE=true
+      - LANCACHE_IP=${HOST_IP}
+      - UPSTREAM_DNS=${DNS_IP}
+    ports:
+      - ${HOST_IP}:53:53/udp
+      - ${HOST_IP}:53:53/tcp
+    networks:
+      - lancache
+    restart: unless-stopped
+    
+  monolithic:
+    image: lancachenet/monolithic:latest
+    container_name: ${STACK_NAME}-monolithic
+    ports:
+      - 80:80/tcp
+      - 443:443/tcp
+    volumes:
+      - ${CACHE_FILE_PATH}/cache:/data/cache
+      - ${CACHE_FILE_PATH}/logs:/data/logs
+    environment:
+      TZ: America/Chicago
+      - CACHE_DISK_SIZE=${CACHE_SIZE}
+      - MIN_FREE_DISK=${MIN_FREE_SIZE}
+      - CACHE_INDEX_SIZE=${INDEX_SIZE}
+      - CACHE_MAX_AGE=3650d
+    networks:
+      - lancache
+    restart: unless-stopped
+    
+networks:
+  lancache:
+    driver: bridge
