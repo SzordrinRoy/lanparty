@@ -1,19 +1,4 @@
 services:
-  samba:
-    image: dockurr/samba
-    container_name: ${STACK_NAME}-sambashare
-    network_mode: bridge
-    environment:
-      NAME: "${NETWORK_SHARE_NAME}"
-      USER: "${NETWORK_SHARE_USER}"
-      PASS: "${NETWORK_SHARE_PASS}"
-      TZ: America/Chicago
-    ports:
-      - 445:445
-    volumes:
-      - ${NETWORK_SHARE_FILE_PATH}:/storage
-    restart: unless-stopped
-    
   dns:
     image: lancachenet/lancache-dns:latest
     container_name: ${STACK_NAME}-dns
