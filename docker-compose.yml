@@ -33,7 +33,7 @@ services:
     
   samba:
     image: dockurr/samba
-    container_name: ${STACK_NAME}
+    container_name: ${STACK_NAME}-sambashare
     network_mode: bridge
     environment:
       NAME: "${NETWORK_SHARE_NAME}"
