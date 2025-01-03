@@ -18,7 +18,6 @@ services:
     image: lancachenet/lancache-dns:latest
     container_name: ${STACK_NAME}-dns
     environment:
-      TZ: America/Chicago
       - USE_GENERIC_CACHE=true
       - LANCACHE_IP=${HOST_IP}
       - UPSTREAM_DNS=${DNS_IP}
@@ -39,7 +38,6 @@ services:
       - ${CACHE_FILE_PATH}/cache:/data/cache
       - ${CACHE_FILE_PATH}/logs:/data/logs
     environment:
-      TZ: America/Chicago
       - CACHE_DISK_SIZE=${CACHE_SIZE}
       - MIN_FREE_DISK=${MIN_FREE_SIZE}
       - CACHE_INDEX_SIZE=${INDEX_SIZE}
