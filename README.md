@@ -44,5 +44,9 @@ network:
 
 13) Name stack, click Repository, add "https://github.com/SzordrinRoy/lanparty" to Reposiroty URL
 
+14) Under Environment variables click advanced mode. Copy "https://github.com/SzordrinRoy/lanparty/blob/main/.env" into the box and change host IP to the lanparty server IP
+
+15) Click deploy the stack
+
 
 
