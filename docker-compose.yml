@@ -43,7 +43,7 @@ services:
     ports:
       - 445:445
     volumes:
-      - ${NETWORK_SHARE_FILE_PATH }:/storage
+      - ${NETWORK_SHARE_FILE_PATH}:/storage
     restart: unless-stopped
     
 networks:
